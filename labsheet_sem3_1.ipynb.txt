@@ -1,0 +1,73 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/amritanshuwidcode/AI-Powered-Fintech-product-project-/blob/main/Labsheet_sem3_1.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "Wn-CcvS1UY0F",
+        "outputId": "b1cd857d-f510-4cff-f0f0-439774816547",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "0  0  0  0  0\n",
+            "0  1  1  0  1\n",
+            "1  0  1  0  1\n",
+            "1  1  1  1  0\n"
+          ]
+        }
+      ],
+      "source": [
+        "def neuron(x1,x2,w1,w2,threshold,bias=0):\n",
+        "    total = (x1*w1)+ (x2*w2) + bias\n",
+        "    if total >=threshold:\n",
+        "        return 1\n",
+        "    else:\n",
+        "        return 0\n",
+        "        print(\"X1 X2 OR AND XOR\")\n",
+        "\n",
+        "for x1 in [0,1]:\n",
+        "  for x2 in [0,1]:\n",
+        "    # neuron 1: OR gate\n",
+        "    or_output = neuron(x1,x2,1,1,1)\n",
+        "    # neuron 2: AND gate\n",
+        "    and_output = neuron(x1,x2,1,1,2)\n",
+        "\n",
+        "\n",
+        "    xor_output = neuron(or_output, and_output, 1, -1, 1)\n",
+        "\n",
+        "    print(x1,\"\",x2,\"\",or_output,\"\",and_output,\"\",xor_output)"
+      ]
+    }
+  ]
+}
