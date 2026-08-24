@@ -1,0 +1,142 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMt1AWBsiypyaWrBcr1TDhJ",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/amritanshuwidcode/AI-Powered-Fintech-product-project-/blob/main/with%20the%20help%20of%20data%20set%20we%20got%20our%20updated%20values.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "ZVJoeiTsrCsS",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4e1cbc40-5674-425a-ce6a-44cfa4f0cc0c"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "    Number of Courses  Time Study  Actual Marks    Predict         Loss  \\\n",
+            "0                 3.0       4.508        19.202   0.480800   350.483329   \n",
+            "1                 4.0       0.096         7.734   0.099896    58.279551   \n",
+            "2                 4.0       3.133        13.811   0.481272   177.681640   \n",
+            "3                 6.0       7.909        53.018   1.227574  2682.248179   \n",
+            "4                 8.0       7.811        55.299   2.438735  2794.207655   \n",
+            "..                ...         ...           ...        ...          ...   \n",
+            "95                6.0       3.561        19.128  16.373466     7.587456   \n",
+            "96                3.0       0.301         5.609   5.749045     0.019613   \n",
+            "97                4.0       7.163        41.444  19.427122   484.742926   \n",
+            "98                7.0       0.309        12.027  12.479762     0.204993   \n",
+            "99                3.0       6.335        32.357  16.585115   248.752348   \n",
+            "\n",
+            "    Updated w1  Updated w2  Updated b  \n",
+            "0     0.021233    0.116879   0.003744  \n",
+            "1     0.027340    0.117026   0.005271  \n",
+            "2     0.038004    0.125378   0.007937  \n",
+            "3     0.100152    0.207300   0.018295  \n",
+            "4     0.184729    0.289878   0.028867  \n",
+            "..         ...         ...        ...  \n",
+            "95    1.644966    1.753648   0.286299  \n",
+            "96    1.644882    1.753640   0.286271  \n",
+            "97    1.662495    1.785181   0.290675  \n",
+            "98    1.661861    1.785153   0.290584  \n",
+            "99    1.671324    1.805136   0.293739  \n",
+            "\n",
+            "[100 rows x 8 columns]\n"
+          ]
+        }
+      ],
+      "source": [
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Load Dataset\n",
+        "df = pd.read_csv(\"Student_Marks.csv\")\n",
+        "# Data\n",
+        "number_courses = df[\"number_courses\"].values.astype(float)\n",
+        "time_study = df[\"time_study\"].values.astype(float)\n",
+        "actual = df[\"Marks\"].values.astype(float)\n",
+        "\n",
+        "# Initial parameters\n",
+        "w1 = 0.01\n",
+        "w2 = 0.10\n",
+        "b = 0.0\n",
+        "\n",
+        "learning_rate = 0.0001\n",
+        "\n",
+        "rows = []\n",
+        "\n",
+        "for i in range(len(df)):\n",
+        "\n",
+        "    # Prediction\n",
+        "    prediction = w1 * number_courses[i] + w2 * time_study[i] + b\n",
+        "\n",
+        "    # Error\n",
+        "    error = prediction - actual[i]\n",
+        "\n",
+        "    # Loss\n",
+        "    loss = error ** 2\n",
+        "\n",
+        "    # Gradients\n",
+        "    dw1 = 2 * error * number_courses[i]\n",
+        "    dw2 = 2 * error * time_study[i]\n",
+        "    db = 2 * error\n",
+        "\n",
+        "    # Update\n",
+        "    w1 = w1 - learning_rate * dw1\n",
+        "    w2 = w2 - learning_rate * dw2\n",
+        "    b = b - learning_rate * db\n",
+        "\n",
+        "    rows.append([\n",
+        "        number_courses[i],\n",
+        "        time_study[i],\n",
+        "        actual[i],\n",
+        "        prediction,\n",
+        "        loss,\n",
+        "        w1,\n",
+        "        w2,\n",
+        "        b\n",
+        "    ])\n",
+        "\n",
+        "# Final table\n",
+        "result = pd.DataFrame(rows, columns=[\n",
+        "    \"Number of Courses\",\n",
+        "    \"Time Study\",\n",
+        "    \"Actual Marks\",\n",
+        "    \"Predict\",\n",
+        "    \"Loss\",\n",
+        "    \"Updated w1\",\n",
+        "    \"Updated w2\",\n",
+        "    \"Updated b\"\n",
+        "])\n",
+        "\n",
+        "print(result)"
+      ]
+    }
+  ]
+}
